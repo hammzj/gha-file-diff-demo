@@ -1,6 +1,4 @@
-const {readFileSync} = require('fs');
 const path = require('path');
-const dotenv = require('dotenv');
 const dotenvenc = require('@tka85/dotenvenc');
 const core = require('@actions/core');
 
