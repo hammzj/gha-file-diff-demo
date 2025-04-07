@@ -34,7 +34,7 @@ jobs:
         env:
           BASE_ENV_ENC_FILE_PATH: ./base/.env.enc
           CURRENT_ENV_ENC_FILE_PATH: ./.env.enc
-          DOTENVENC_PASS: ${{ secrets.ENV_ENC_DECRYPTION_KEY }}
+          DOTENVENC_PASS: ${{ secrets.DOTENVENC_PASS }}
 
   post-or-edit-comment:
     runs-on: ubuntu-latest
