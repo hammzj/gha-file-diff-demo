@@ -2,7 +2,6 @@
   "name": "gha-file-diff-demo",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "encrypt": "./node_modules/.bin/dotenvenc -e",
     "decrypt": "./node_modules/.bin/dotenvenc -d",
