@@ -62,5 +62,5 @@ jobs:
           body: |
             # Updates to ".env" file in this pull request
 
-            ${{ needs.get-file-differences.outputs.message  }}
+            ${{ needs.get-file-differences.outputs.message }}
           edit-mode: replace
