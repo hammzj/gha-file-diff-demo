@@ -32,21 +32,22 @@ jobs:
 
       - run: npm ci
 
-      # This is assuming a generic decryption script;
-      # Replace the command with your own decryption script!
-      - name: Decrypt current (head) ref file as "updated"
-        run: npm run decrypt
-
-      # This is assuming a generic decryption script;
-      # Replace the command with your own decryption script!
-      - name: Decrypt base (target) ref file as "original"
-        run: cd base && npm run decrypt
+#      # This is assuming a generic decryption script;
+#      # Replace the command with your own decryption script!
+#      - name: Decrypt current (head) ref file as "updated"
+#        run: npm run decrypt
+#
+#      # This is assuming a generic decryption script;
+#      # Replace the command with your own decryption script!
+#      - name: Decrypt base (target) ref file as "original"
+#        run: cd base && npm run decrypt
 
       - run: npm run diff-env-files
         id: produce-diff
         env:
           BASE_FILE_PATH: ./base/.env
           CURRENT_FILE_PATH: ./.env
+          DOTENVENC_PASS: ${{ secrets.ENV_ENC_DECRYPTION_KEY }}
 
   post-or-edit-comment:
     runs-on: ubuntu-latest
