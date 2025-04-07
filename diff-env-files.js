@@ -86,6 +86,7 @@ function main() {
     const currentBranchFile =  dotenvenc.decrypt(CURRENT_ENV_ENC_FILE_PATH)
 
     const diffs = performDiff(baseBranchFile, currentBranchFile);
+    console.debug('diffs',diffs)
     const hasDiffs = Object.values(diffs).some((d) => d.length > 0);
 
     const message = hasDiffs ?
