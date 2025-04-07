@@ -41,6 +41,9 @@ jobs:
 
   post-or-edit-comment:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     needs: [ get-file-differences ]
     steps:
       - name: Find Comment
