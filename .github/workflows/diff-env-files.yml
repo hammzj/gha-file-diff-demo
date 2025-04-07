@@ -18,8 +18,6 @@ jobs:
       - name: Checkout head branch
         uses: actions/checkout@v4
 
-      - run: mkdir base
-
       - name: Checkout file from base branch
         uses: actions/checkout@v4
         with:
