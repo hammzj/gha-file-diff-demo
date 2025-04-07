@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "encrypt": "./node_modules/.bin/dotenvenc -e",
-    "decrypt": "./node_modules/.bin/dotenvenc -d -i ./.env",
+    "decrypt": "./node_modules/.bin/dotenvenc -d"
     "diff-env-files": "node diff-env-files.js"
   },
   "author": "Zachary J. Hamm",
