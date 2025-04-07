@@ -36,7 +36,7 @@ jobs:
         id: produce-diff
         env:
           BASE_ENV_ENC_FILE_PATH: ./base/.env.enc
-          CURRENT_ENV_ENC_FILE_PATH: ./.env.end
+          CURRENT_ENV_ENC_FILE_PATH: ./.env.enc
           DOTENVENC_PASS: ${{ secrets.ENV_ENC_DECRYPTION_KEY }}
 
   post-or-edit-comment:
