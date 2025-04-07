@@ -75,22 +75,20 @@ const getAsMarkdown = (diffs) => {
 };
 
 async function main() {
-    const BASE_ENV_ENC_FILE_PATH = path.resolve(process.env.BASE_ENV_ENC_FILE_PATH);
-    const CURRENT_ENV_ENC_FILE_PATH = path.resolve(process.env.CURRENT_ENV_ENC_FILE_PATH)
-
     //base-ref (target branch) file
-    const baseBranchFile = await dotenvenc.decrypt({encryptedFile: BASE_ENV_ENC_FILE_PATH})
+    const baseBranchFile = await dotenvenc.decrypt({encryptedFile: path.resolve(process.env.BASE_ENV_ENC_FILE_PATH)})
     //head-ref (source branch) file
-    const currentBranchFile = await dotenvenc.decrypt({encryptedFile: CURRENT_ENV_ENC_FILE_PATH})
+    const currentBranchFile = await dotenvenc.decrypt({encryptedFile: path.resolve(process.env.CURRENT_ENV_ENC_FILE_PATH)})
 
+    //Get diffs
     const diffs = performDiff(baseBranchFile, currentBranchFile);
     const hasDiffs = Object.values(diffs).some((d) => d.length > 0);
 
+    //Add outputs to GitHub Actions workflow
     const message = hasDiffs ?
         getAsMarkdown(diffs) :
         'No differences exist between the files.'
-
-    //Add output to GitHub Actions workflow
+    core.setOutput('diffs', diffs);
     core.setOutput('message', message);
 }
 
