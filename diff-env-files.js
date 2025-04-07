@@ -74,17 +74,16 @@ const getAsMarkdown = (diffs) => {
         .trim();
 };
 
-function main() {
+async function main() {
     const BASE_ENV_ENC_FILE_PATH = path.resolve(process.env.BASE_ENV_ENC_FILE_PATH);
     const CURRENT_ENV_ENC_FILE_PATH = path.resolve(process.env.CURRENT_ENV_ENC_FILE_PATH)
 
     //base-ref (target branch) file
-    const baseBranchFile = dotenvenc.decrypt(BASE_ENV_ENC_FILE_PATH)
+    const baseBranchFile = await dotenvenc.decrypt({encryptedFile: BASE_ENV_ENC_FILE_PATH})
     //head-ref (source branch) file
-    const currentBranchFile =  dotenvenc.decrypt(CURRENT_ENV_ENC_FILE_PATH)
+    const currentBranchFile = await dotenvenc.decrypt({encryptedFile: CURRENT_ENV_ENC_FILE_PATH})
 
     const diffs = performDiff(baseBranchFile, currentBranchFile);
-    console.debug('diffs',diffs)
     const hasDiffs = Object.values(diffs).some((d) => d.length > 0);
 
     const message = hasDiffs ?
