@@ -1,8 +1,7 @@
 name: Display differences between ".env.enc" files
 description: |
   This annotates the current pull request with differences between the ".env.enc" files in the base and head branches.
-  It output the key names that have been added, removed, and modified on the head branch, 
-  both as a job summary and as a comment on the branch.
+  It output the key names that have been added, removed, and modified on the head branch as a comment on the branch.
 
 on:
   pull_request:
