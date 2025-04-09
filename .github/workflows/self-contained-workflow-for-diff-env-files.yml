@@ -27,8 +27,8 @@ jobs:
           sparse-checkout: |
             .env.enc
 
-      - run: npm ci
-
+      #- run: npm ci
+      - run: npm install @tka85/dotenvenc @actions/core
       - name: Diff files with JavaScript
         uses: actions/github-script@v7
         id: produce-diff
