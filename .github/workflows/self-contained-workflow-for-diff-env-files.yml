@@ -40,8 +40,8 @@ jobs:
           result-encoding: string
           retries: 0
           script: |
-            const script = require('./diff-env-files.js')
-            await script();
+            require('./diff-env-files.js')
+
 
   post-or-edit-comment:
     runs-on: ubuntu-latest
