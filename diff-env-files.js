@@ -5,7 +5,7 @@ const core = require('@actions/core');
 const hideKeys = (diffs) => {
     let sensitiveKeysChanged = 0
     //@example: DB_PASSWORD,SECRET_TOKEN
-    const SENSITIVE_KEYS = `${process.env.ENV_SENSITIVE_KEYS}`.split(',')
+    const SENSITIVE_KEYS = `${process.env.DOTENV_SENSITIVE_KEYS}`.split(',')
 
     Object.entries(diffs).map(([section, keys]) => {
         keys.map(k => {
@@ -104,21 +104,21 @@ function getAsMarkdown(diffs) {
  * * `message`: A Markdown-formatted message to use for posting comments on Git issues and pull requests.
  *
  * Environment variables:
- * * `BASE_ENV_ENC_FILE_PATH`: path to the base (target) branch encrypted `.env` file
- * * `CURRENT_ENV_ENC_FILE_PATH`: path to the current (source/head) branch encrypted `.env` file
+ * * `BASE_DOTENVENC_FILE_PATH`: path to the base (target) branch encrypted `.env` file
+ * * `CURRENT_DOTENVENC_FILE_PATH`: path to the current (source/head) branch encrypted `.env` file
  * * `DOTENVENC_PASS`: the password used to encrypt and decrypt the files
- * * `ENV_SENSITIVE_KEYS`: (optional) a comma-delimited list of keys to hide in the output
+ * * `DOTENV_SENSITIVE_KEYS`: (optional) a comma-delimited list of keys to hide in the output
  *
  * @see dotenvenc
  * @returns {Promise<void>}
  */
 async function main() {
     //base-ref (target branch) file
-    const baseBranchFile = await dotenvenc.decrypt({encryptedFile: path.resolve(process.env.BASE_ENV_ENC_FILE_PATH)})
+    const baseBranchFile = await dotenvenc.decrypt({encryptedFile: path.resolve(process.env.BASE_DOTENVENC_FILE_PATH)})
     //head-ref (source branch) file
-    const currentBranchFile = await dotenvenc.decrypt({encryptedFile: path.resolve(process.env.CURRENT_ENV_ENC_FILE_PATH)})
+    const currentBranchFile = await dotenvenc.decrypt({encryptedFile: path.resolve(process.env.CURRENT_DOTENVENC_FILE_PATH)})
 
-    //Get diffs
+    //Get diffs and hide any sensitive keys
     const diffs = hideKeys(performDiff(baseBranchFile, currentBranchFile));
     const hasDiffs = Object.values(diffs).some((d) => d.length > 0);
     //Add outputs to GitHub Actions workflow
