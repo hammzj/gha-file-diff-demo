@@ -43,3 +43,7 @@ MY_NEW_KEY=abcd1234~
 ```
 
 * Open a pull request and the GitHub workflow for `diff-env-files.yml` should run!
+
+
+## Note
+For this repository, the `DOTENVENC_PASS=%special-ocular-remittance-session-0407*`
