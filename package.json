@@ -1,8 +1,7 @@
 {
   "name": "gha-file-diff-demo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A demo of comparing encrypted .env files with GitHub Actions workflows",
   "scripts": {
     "encrypt": "./node_modules/.bin/dotenvenc -e",
     "decrypt": "./node_modules/.bin/dotenvenc -d",
