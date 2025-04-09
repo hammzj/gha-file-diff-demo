@@ -1,63 +1,63 @@
-name: Display differences between ".env.enc" files
-description: |
-  This annotates the current pull request with differences between the ".env.enc" files in the base and head branches.
-  It output the key names that have been added, removed, and modified on the head branch as a comment on the branch.
-
-on:
-  pull_request:
-    paths:
-      - '.env.enc'
-
-jobs:
-  get-file-differences:
-    runs-on: ubuntu-latest
-    outputs:
-      message: ${{ steps.produce-diff.outputs.message }}
-    steps:
-      - name: Checkout head branch
-        uses: actions/checkout@v4
-
-      - name: Checkout file from base branch
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.base_ref }}
-          path: base
-          sparse-checkout-cone-mode: false
-          submodules: true
-          sparse-checkout: |
-            .env.enc
-
-      - run: npm ci
-
-      - run: npm run diff-env-files
-        id: produce-diff
-        env:
-          BASE_DOTENVENC_FILE_PATH: ./base/.env.enc
-          CURRENT_DOTENVENC_FILE_PATH: ./.env.enc
-          DOTENVENC_PASS: ${{ secrets.DOTENVENC_PASS }}
-
-  post-or-edit-comment:
-    runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
-    needs: [ get-file-differences ]
-    steps:
-      - name: Find Comment
-        uses: peter-evans/find-comment@v3
-        id: find-comment
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: 'github-actions[bot]'
-          body-includes: 'Updates to ".env" file in this pull request'
-
-      - name: Add or replace comment with newest file differences
-        uses: peter-evans/create-or-update-comment@v4
-        with:
-          comment-id: ${{ steps.find-comment.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            # Updates to ".env" file in this pull request
-
-            ${{ needs.get-file-differences.outputs.message }}
-          edit-mode: replace
+#name: Display differences between ".env.enc" files
+#description: |
+#  This annotates the current pull request with differences between the ".env.enc" files in the base and head branches.
+#  It output the key names that have been added, removed, and modified on the head branch as a comment on the branch.
+#
+#on:
+#  pull_request:
+#    paths:
+#      - '.env.enc'
+#
+#jobs:
+#  get-file-differences:
+#    runs-on: ubuntu-latest
+#    outputs:
+#      message: ${{ steps.produce-diff.outputs.message }}
+#    steps:
+#      - name: Checkout head branch
+#        uses: actions/checkout@v4
+#
+#      - name: Checkout file from base branch
+#        uses: actions/checkout@v4
+#        with:
+#          ref: ${{ github.base_ref }}
+#          path: base
+#          sparse-checkout-cone-mode: false
+#          submodules: true
+#          sparse-checkout: |
+#            .env.enc
+#
+#      - run: npm ci
+#
+#      - run: npm run diff-env-files
+#        id: produce-diff
+#        env:
+#          BASE_DOTENVENC_FILE_PATH: ./base/.env.enc
+#          CURRENT_DOTENVENC_FILE_PATH: ./.env.enc
+#          DOTENVENC_PASS: ${{ secrets.DOTENVENC_PASS }}
+#
+#  post-or-edit-comment:
+#    runs-on: ubuntu-latest
+#    permissions:
+#      issues: write
+#      pull-requests: write
+#    needs: [ get-file-differences ]
+#    steps:
+#      - name: Find Comment
+#        uses: peter-evans/find-comment@v3
+#        id: find-comment
+#        with:
+#          issue-number: ${{ github.event.pull_request.number }}
+#          comment-author: 'github-actions[bot]'
+#          body-includes: 'Updates to ".env" file in this pull request'
+#
+#      - name: Add or replace comment with newest file differences
+#        uses: peter-evans/create-or-update-comment@v4
+#        with:
+#          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+#          issue-number: ${{ github.event.pull_request.number }}
+#          body: |
+#            # Updates to ".env" file in this pull request
+#
+#            ${{ needs.get-file-differences.outputs.message }}
+#          edit-mode: replace
